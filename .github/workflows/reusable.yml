@@ -8,6 +8,9 @@ on: # define inputs for workflow call
         required: false
         default: dist
         type: string
+    # secrets:
+    #     some-secret:
+    #       required: false    
 jobs:
   deploy:
     runs-on: ubuntu-latest
