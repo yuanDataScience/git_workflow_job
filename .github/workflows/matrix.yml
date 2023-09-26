@@ -9,6 +9,12 @@ jobs:
         # combinations of node-versions and OS will run parallelly
         node-version: [12, 14, 16]
         operating-system: [ubuntu-latest, windows-latest]
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+        exclude:
+          - node-version: 12
+            operating-system: windows-latest    
     # ubuntu-latest and windows-latest will run in parallel
     runs-on: ${{ matrix.operating-system }}
     steps:
