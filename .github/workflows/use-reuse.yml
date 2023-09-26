@@ -75,7 +75,17 @@ jobs:
     with:
       artifact-name: dist-files
     # secrets:
-    #   some-secret: ${{ secrets.some-secret }}  
+    #   some-secret: ${{ secrets.some-secret }}
+  print-deploy-result:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: print deploy output
+        run: echo "${{ needs.deploy.outputs.result }}"
+        # deploy calls the reusable workflow, which sends the 
+        # results to deploy, and the reusable outputs has 'results'
+        # entry with its value as the outcome of deploy job
+
   report:
     needs: [lint, deploy]
     if: failure()

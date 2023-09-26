@@ -8,11 +8,18 @@ on: # define inputs for workflow call
         required: false
         default: dist
         type: string
+    outputs:
+      results:
+        description: The result of the deployment operation
+        value: ${{ jobs.deploy.outputs.outcome }}    
     # secrets:
     #     some-secret:
-    #       required: false    
+    #       required: false
 jobs:
   deploy:
+    outputs:
+      outcome: ${{ steps.set-result.output.step-result }}
+      # the output is obtained by set-output command in the step
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -20,6 +27,9 @@ jobs:
         with:
           name: ${{ inputs.artifact-name }}
       - name: List files
-        run: ls    
+        run: ls
       - name: Output information
         run: echo "Deploying & uploading..."
+      - name: Set result output
+        id: set-result
+        run: echo "::set-output name=step-result::success"
